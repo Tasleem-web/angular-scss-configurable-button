@@ -1,0 +1,109 @@
+@import '../_shared/scss/variables';
+
+@mixin generate-spinner-by-size($size, $borderWidth) {
+  border-width: $borderWidth;
+  width: $size;
+  height: $size;
+}
+
+@mixin generate-overlay-style($color, $spinner, $track) {
+  background: $color;
+  .spinner {
+    .spinner-inner{
+      border-color: $track;
+      border-top-color: $spinner;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.page-loader {
+  position: relative;
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0; 
+    right: 0;
+    z-index: 100;
+
+    .spinner {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -80%);
+      
+      .spinner-inner {
+        border-radius: 50%;
+        border-style: solid;
+        
+        animation: spin 0.75s linear infinite;
+      
+        &.spinner-size-sm {
+          @include generate-spinner-by-size(72px, 9px);
+        }
+
+        &.spinner-size-md {
+          @include generate-spinner-by-size(96px, 12px);
+        }
+
+        &.spinner-size-lg {
+          @include generate-spinner-by-size(128px, 16px);
+        }
+      }
+    }
+
+    &.overlay-loader-style-transparent {
+      background: transparent;
+      .spinner {
+        .spinner-inner{
+          border-color: #FFF; /* Light grey 4e5d6c */
+          border-top-color: #2b3e50; /* dark gray */
+        }
+      }
+    }
+    &.overlay-loader-style-dim-dark {
+      @include generate-overlay-style(
+        rgba(#000, 0.3), $primary, darken(#FFF, 20%));
+    }
+    &.overlay-loader-style-dim-light {
+      @include generate-overlay-style(
+        rgba(#FFF, 0.5), $primary, lighten($primary, 20%));
+    }
+    
+    &.overlay-loader-style-primary {
+      @include generate-overlay-style(
+        $primary, darken($primary, 10%), lighten($primary, 20%));
+    }
+
+    &.overlay-loader-style-secondary {
+      @include generate-overlay-style(
+        $secondary, darken($secondary, 10%), lighten($secondary, 20%));
+    }
+
+    &.overlay-loader-style-success {
+      @include generate-overlay-style(
+        $success, darken($success, 10%), lighten($success, 20%));
+    }
+
+    &.overlay-loader-style-info {
+      @include generate-overlay-style(
+        $info, darken($info, 10%), lighten($info, 20%));
+    }
+
+    &.overlay-loader-style-warning {
+      @include generate-overlay-style(
+        $warning, darken($warning, 10%), lighten($warning, 20%));
+    }
+
+    &.overlay-loader-style-danger {
+      @include generate-overlay-style(
+        $danger, darken($danger, 10%), lighten($danger, 20%));
+    }    
+  }
+}

@@ -1,4 +1,4 @@
-@import "../_shared/scss/variables";
+@import '../_shared/scss/variables';
 // @import "../_shared/scss/mixins";
 
 @mixin generate-button-solid($color, $defaultColor: $primary) {
@@ -32,6 +32,7 @@
     &.button-color-primary {
       @include generate-button-solid($primary, $light);
     }
+    
     &.button-color-secondary {
       @include generate-button-solid($secondary, $light);
     }

@@ -11,16 +11,20 @@ import { ButtonColor } from './button-color.enum';
   template: '<ng-content></ng-content>',
   styleUrls: ['./button.component.scss'],
 })
-export class ButtonComponent {
+export class ButtonComponent implements OnInit {
+  // default solid
   @Input()
-  public style: string | 'solid' | 'outlined' = ButtonStyle.SOLID; // default solid
+  public style: string | 'solid' | 'outlined' = ButtonStyle.SOLID;
 
+  // default small
   @Input()
-  public size: string | 'small' | 'medium' | 'large' = ButtonSize.SMALL; // default small
+  public size: string | 'small' | 'medium' | 'large' = ButtonSize.SMALL;
 
+  // default rounded
   @Input()
-  public shape: string | 'squared' | 'rounded' | 'pilled' = ButtonShape.ROUNDED; // default rounded
+  public shape: string | 'squared' | 'rounded' | 'pilled' = ButtonShape.ROUNDED;
 
+  // default primary
   @Input()
   public color:
     | string
@@ -30,7 +34,12 @@ export class ButtonComponent {
     | 'info'
     | 'warning'
     | 'danger'
-    | 'light' = ButtonColor.PRIMARY; // default primary
+    | 'light' = ButtonColor.PRIMARY;
+
+  // For the form submission [if submitting form, pass "type=submit" in this component]
+  // default is 'button'
+  @Input()
+  public type: string = 'button';
 
   constructor() {
     this.style = ButtonStyle.SOLID;
@@ -111,12 +120,22 @@ export class ButtonComponent {
         return ButtonColor.LIGHT;
 
       default:
-        return ButtonColor.DEFAULT;
+        return ButtonColor.PRIMARY;
     }
   }
 
   @HostBinding('class')
   get classes(): string {
     return `${this.style} ${this.size} ${this.shape} ${this.color}`;
+  }
+
+  @HostBinding('attr.tabindex')
+  get tabIndex(): string {
+    return `0`;
+  }
+
+  @HostBinding('attr.type')
+  get buttonType(): string {
+    return `${this.type}`;
   }
 }
